@@ -1,0 +1,13 @@
+{
+    "name": "maidai-api",
+    "env": {
+        "MONGO_ATLAS_PW": {
+            "description": "Mongodb atlas password",
+            "value": "20fq10OmMkAbC0jZ"
+        },
+        "JWT_KEY": {
+            "description": "JWT secret",
+            "value": "noOneWillKnow"
+        } 
+    }
+}
