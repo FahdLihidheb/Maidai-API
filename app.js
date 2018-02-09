@@ -36,6 +36,11 @@ app.route('/login').post(userController.login);
 app.use('/topics', topicsRoutes);
 app.use('/posts', postsRoutes);
 
+app.route('/heroku-test').get((req, res, next) => {
+    return resizeBy.status(201).json({
+        "message": "Hello heroku"
+    })
+});
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
