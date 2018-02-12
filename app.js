@@ -12,7 +12,12 @@ mongoose.connect('mongodb://FahdLihidheb:'+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+//-- website welcome
 
+// Webhook ( Maidai assistant )
+const assistantWebhook = require('./assistant_webhook/index');
+app.use('/maidai-assistant', assistantWebhook)
+//-- Backend ( Maidai news )
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
@@ -25,16 +30,18 @@ app.use((req, res, next) => {
     }
     next();
 });
-//--
-const topicsRoutes = require('./api/routes/topics');
-const userController = require('./api/routes/user');
-const postsRoutes = require('./api/routes/posts');
+
+//-- backend routes/controllers
+const topicsRoutes = require('./backend_api/routes/topics');
+const userController = require('./backend_api/controllers/user');
+const postsRoutes = require('./backend_api/routes/posts');
 //Auth
-app.route('/signup').post(userController.signup);
-app.route('/login').post(userController.login);
-// Routes
-app.use('/topics', topicsRoutes);
-app.use('/posts', postsRoutes);
+app.route('/maidai-news/signup').post(userController.signup);
+app.route('/maidai-news/login').post(userController.login);
+// Backend routes callbacks
+app.use('/maidai-news/topics', topicsRoutes);
+app.use('/maidai-news/posts', postsRoutes);
+
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
