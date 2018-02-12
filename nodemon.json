@@ -1,8 +1,0 @@
-{
-    "env": {
-        "MONGO_ATLAS_PW": "20fq10OmMkAbC0jZ",
-        "JWT_KEY": "noOneWillKnow",
-        "PAGE_ACCESS_TOKEN": "EAAEvlw3vZBfkBAGbxLK2OZAsZA6IVbIQeWod32jo0sXjlEn6m9UfME8ImsW5SgNM7EkOPpDl8FgiMJX3bd3AhZAKWZC45q6HeUE34uDXB8kZCafNZBOiXWJ4CIScQat1iCATBkjG7vmZCZCAZAh1sA8FPgohQY6EUZCfladyz14w5gWxAZDZD",
-        "VERIFY_TOKEN": "hellodarknessmyoldfriend"
-    }
-}
