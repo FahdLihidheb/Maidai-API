@@ -5,18 +5,18 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 //connct to mongodb atlas
-mongoose.connect('mongodb://FahdLihidheb:'+
-                process.env.MONGO_ATLAS_PW
-                +'@clusterofthecrown-shard-00-00-p8mrc.mongodb.net:27017,clusterofthecrown-shard-00-01-p8mrc.mongodb.net:27017,clusterofthecrown-shard-00-02-p8mrc.mongodb.net:27017/test?ssl=true&replicaSet=ClusterOfTheCrown-shard-0&authSource=admin');
+mongoose.connect('mongodb://FahdLihidheb:' +
+    process.env.MONGO_ATLAS_PW
+    + '@clusterofthecrown-shard-00-00-p8mrc.mongodb.net:27017,clusterofthecrown-shard-00-01-p8mrc.mongodb.net:27017,clusterofthecrown-shard-00-02-p8mrc.mongodb.net:27017/test?ssl=true&replicaSet=ClusterOfTheCrown-shard-0&authSource=admin');
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //-- website welcome
 
 // Webhook ( Maidai assistant )
 const assistantWebhook = require('./assistant_webhook/index');
-app.use('/maidai-assistant', assistantWebhook)
+app.route('/maidai-assistant').post(assistantWebhook.connector)
 //-- Backend ( Maidai news )
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     res.status(error.status || 500);
     res.json({
-        error : {
+        error: {
             message: error.message
         }
     });
