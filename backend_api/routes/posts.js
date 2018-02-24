@@ -4,9 +4,10 @@ const Post = require('../models/post');
 const checkAuth = require('../middleware/check-auth');
 
 router.get('/profile/:userId', (req, res, next) => {
-    Post.find({writer: req.params.userId})
-        .select('_id title writer createdOn')
+    Post.find({ writer: req.params.userId })
+        .select('_id title writer createdOn topics')
         .populate('writer', '_id firstname lastname')
+        .populate('topics', 'title')
         .exec()
         .then(posts => {
             res.status(201).json(posts);
@@ -17,7 +18,33 @@ router.get('/profile/:userId', (req, res, next) => {
 });
 
 router.get('/topic/:topicId', (req, res, next) => {
+    Post.find({ topics: req.params.topicId })
+        .select('_id title writer createdOn topics')
+        .populate('writer', '_id firstname lastname')
+        .populate('topics', 'title')
+        .exec()
+        .then(posts => {
+            res.status(201).json(posts);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
 
+router.get('/accueil', (req, res, next) => {
+    Post.find()
+    .limit(4)
+    .sort('-createdOn')
+    .select('_id title writer createdOn topics')
+    .populate('writer', '_id firstname lastname')
+    .populate('topics', 'title')
+    .exec()
+    .then(posts => {
+        res.status(201).json(posts);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
 });
 
 router.get('/accueil/:userId', (req, res, next) => {
@@ -45,7 +72,7 @@ router.post('/', checkAuth, (req, res, next) => {
     post
         .save()
         .then(result => {
-            res.status(201).json(result)
+            res.status(201).json(result);
         })
         .catch(err => {
             res.status(500).json(err);

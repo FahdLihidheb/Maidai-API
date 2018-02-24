@@ -4,18 +4,16 @@ var connector = new builder.ChatConnector();
 var bot = new builder.UniversalBot(connector);
 var recognizer = new apiairecognizer(process.env.APIAI_TOKEN);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
-
-const intentController = require('./intentController');
-
+const intentcontroller = require('./intentController');
 bot.dialog('/', intents);
 
-intents.matches('Default Welcome Intent', intentController.welcome);
+intents.matches('Default Welcome Intent', intentcontroller.welcome);
 
-intents.matches('Medical News', intentController.medicalNews);
+intents.matches('Medical News', intentcontroller.medicalNews);
 
-intents.matches('What is', intentController.whatis);
+intents.matches('What is', intentcontroller.whatis);
 
-intents.matches('Ask me', intentController.askMe);
+intents.matches('Ask me', intentcontroller.askMe);
 
 
 //Defualt intent

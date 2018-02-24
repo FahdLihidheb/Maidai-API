@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const topicSchema = mongoose.Schema({
-    title:{
+    title: {
         type: String,
         required: true,
         unique: true,
@@ -14,7 +14,7 @@ const topicSchema = mongoose.Schema({
     createdOn: {
         type: Date,
         default: Date.now
-      }
+    }
 });
 
 module.exports = mongoose.model("Topics", topicSchema);
