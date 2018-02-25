@@ -1,8 +1,22 @@
 var builder = require('botbuilder');
-
+const FBprofile = require('./modelController/facebookProfile');
 //welcome intent
 exports.welcome = (session) => {
-    session.send("Welcome to Maidai News "+session.userData.first_name+", I am your assistant");
+    FBprofile.saveProfile({
+        userData: session.userData
+    });
+    var msg = new builder.Message(session)
+        .text("Welcome to Maidai News, " +
+            session.userData.first_name +
+            ". I am your assistant.\n\nMaidai News is a social media where you can find articles about health and medical news, and i am here to help you find what you are asking for.\n\n you can ask me somthing like")
+        .suggestedActions(
+            builder.SuggestedActions.create(
+                session, [
+                    builder.CardAction.imBack(session, "medical news", "Medical news"),
+                    builder.CardAction.imBack(session, "what is cold", "what is cold")
+                ]
+            ));
+    session.send(msg);
 };
 
 //medical news intent
@@ -13,31 +27,24 @@ exports.medicalNews = (session, args) => {
     newsapi.v2.topHeadlines({
         category: 'health',
         country: 'fr',
-        language: 'en'
+        language: 'en',
+        pageSize: 5
     }).then(response => {
+        var newsArticls = [];
+        response.articles.forEach(element => {
+            newsArticls.push(new builder.HeroCard(session)
+                .title(element.title)
+                .text(element.description)
+                .images([builder.CardImage.create(session, element.urlToImage)])
+                .buttons([
+                    builder.CardAction.openUrl(session, element.url, 'More Information')
+                ]));
+        });
         var msg = new builder.Message(session);
         msg.attachmentLayout(builder.AttachmentLayout.carousel);
         msg.text("Here are the latest headlines");
-        msg.attachments([
-            new builder.HeroCard(session)
-                .title("Coffee and cancer")
-                .subtitle("Los angeles times")
-                .text("Will coffee in california come with a cancer warning?")
-                .images([builder.CardImage.create(session, 'http://www.latimes.com/resizer/uTj7f0beadjzDIocxsbnCy-Utks=/1400x0/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/IBCQ7GBSZNDDLBPBLZ7R75KAMI.jpg')])
-                .buttons([
-                    builder.CardAction.openUrl(session, 'http://www.latimes.com/opinion/op-ed/la-oe-nazaryan-acrylamide-20180218-story.html', 'More Information')
-                ]),
-            new builder.HeroCard(session)
-                .title("Vaccine")
-                .subtitle("Los angeles times")
-                .text("In mice, a single vaccine prompts the immune system to fight breast, lung and skin cancers")
-                .images([builder.CardImage.create(session, 'http://www.latimes.com/resizer/xbTmeZd6p8sAcRc52YQcFf_zu-s=/1400x0/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/BHVGDACK6NHE7ENVKWSB24ND7A.jpg')])
-                .buttons([
-                    builder.CardAction.openUrl(session, 'http://www.latimes.com/opinion/op-ed/la-oe-nazaryan-acrylamide-20180218-story.html', 'More Information')
-                ])
-        ]);
+        msg.attachments(newsArticls);
         session.send(msg);
-        console.log(response);
     });
 };
 
@@ -68,7 +75,7 @@ exports.askMe = (session) => {
             builder.SuggestedActions.create(
                 session, [
                     builder.CardAction.imBack(session, "medical news", "Medical news"),
-                    builder.CardAction.imBack(session, "what is blood cancer", "what is blood cancer")
+                    builder.CardAction.imBack(session, "what is cold", "what is cold")
                 ]
             ));
     session.send(msg);
