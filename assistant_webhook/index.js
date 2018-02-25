@@ -1,6 +1,9 @@
 var builder = require('botbuilder');
 var apiairecognizer = require('api-ai-recognizer');
-var connector = new builder.ChatConnector();
+var connector = new builder.ChatConnector({
+  appId: process.env.MICROSOFT_APP_ID,
+  appPassword: process.env.MICROSOFT_APP_PASSWORD+"^"
+});
 var bot = new builder.UniversalBot(connector);
 var recognizer = new apiairecognizer(process.env.APIAI_TOKEN);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
