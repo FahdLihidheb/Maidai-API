@@ -2,35 +2,7 @@ var builder = require('botbuilder');
 
 //welcome intent
 exports.welcome = (session) => {
-    var msg = new builder.Message(session);
-    msg.attachmentLayout(builder.AttachmentLayout.carousel);
-    msg.text("Welcome to Maidai News Fahd, I am your assistant.\n\nLet's start by knowing you more, here are some of the most followed topics");
-    msg.attachments([
-        new builder.HeroCard(session)
-            .title("Cancer news")
-            .subtitle("News about cancer")
-            .text("Follow the latest news about cancer")
-            .images([builder.CardImage.create(session, 'https://ichef-1.bbci.co.uk/news/660/media/images/52677000/jpg/_52677462_cancer.jpg')])
-            .buttons([
-                builder.CardAction.imBack(session, "", "Follow")
-            ]),
-        new builder.HeroCard(session)
-            .title("Mental healh")
-            .subtitle("Mental health")
-            .text("Follow the latest news about mental health")
-            .images([builder.CardImage.create(session, 'http://thecommunityword.com/online/files/2013/12/1213-Knight-story-graphic1.jpg')])
-            .buttons([
-                builder.CardAction.imBack(session, "", "Follow")
-            ])
-    ]);
-    msg.suggestedActions(
-        builder.SuggestedActions.create(
-            session, [
-                builder.CardAction.imBack(session, "What can you do?", "Help"),
-                builder.CardAction.imBack(session, "Medical news", "Medical news")
-            ]
-        ));
-    session.send(msg);
+    session.send("Welcome to Maidai News "+session.userData.first_name+", I am your assistant");
 };
 
 //medical news intent
