@@ -2,18 +2,12 @@ var builder = require('botbuilder');
 const FBprofile = require('./modelController/facebookProfile');
 //welcome intent
 exports.welcome = (session) => {
-    FBprofile.saveProfile({
-        userData: session.userData
-    });
     var msg = new builder.Message(session)
-        .text("Welcome to Maidai News, " +
-            session.userData.first_name +
-            ". I am your assistant.\n\nMaidai News is a social media where you can find articles about health and medical news, and i am here to help you find what you are asking for.\n\n you can ask me somthing like")
+        .text("Welcome to Maidai News " + session.userData.first_name + ", I am your assistant.\n\nyou can ask me somthing like")
         .suggestedActions(
             builder.SuggestedActions.create(
                 session, [
-                    builder.CardAction.imBack(session, "medical news", "Medical news"),
-                    builder.CardAction.imBack(session, "what is cold", "what is cold")
+                    builder.CardAction.imBack(session, "medical news", "Medical news")
                 ]
             ));
     session.send(msg);

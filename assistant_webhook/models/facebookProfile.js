@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const FBprofile = mongoose.Schema({
+    user_id: {
+        id: String
+    },
     userData: {
-        user_id: {
-            type: String
-        },
         first_name: {
             type: String
         },
@@ -19,6 +19,11 @@ const FBprofile = mongoose.Schema({
         NewsSources: [
             {
                 source: String
+            }
+        ],
+        interrestes: [
+            {
+                title: String
             }
         ]
     },

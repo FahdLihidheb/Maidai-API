@@ -12,7 +12,6 @@ mongoose.connect('mongodb://FahdLihidheb:' +
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-//-- website welcome
 
 // Webhook ( Maidai assistant )
 const assistantWebhook = require('./assistant_webhook/index');

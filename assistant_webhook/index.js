@@ -1,27 +1,19 @@
 var builder = require('botbuilder');
 var apiairecognizer = require('api-ai-recognizer');
-const facebook = require('botbuilder-facebookextension');
-
-var inMemoryStorage = new builder.MemoryBotStorage();
 
 var connector = new builder.ChatConnector({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD + "^"
 });
 
-var bot = new builder.UniversalBot(connector, {
-  localizerSettings: {
-    defaultLocale: "en"
-  }
-}).set('storage', inMemoryStorage);
+
+
+var bot = new builder.UniversalBot(connector);
 var recognizer = new apiairecognizer(process.env.APIAI_TOKEN);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
 
 const intentcontroller = require('./intentController');
 
-bot.use(facebook.RetrieveUserProfile({
-  accessToken: process.env.PAGE_ACCESS_TOKEN
-}));
 
 bot.dialog('/', intents);
 
