@@ -6,9 +6,9 @@ var connector = new builder.ChatConnector({
   appPassword: process.env.MICROSOFT_APP_PASSWORD + "^"
 });
 
+var inMemoryStorage = new builder.MemoryBotStorage();
 
-
-var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage);
 var recognizer = new apiairecognizer(process.env.APIAI_TOKEN);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
 
