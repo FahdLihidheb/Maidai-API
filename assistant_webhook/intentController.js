@@ -3,7 +3,7 @@ const FBprofile = require('./modelController/facebookProfile');
 //welcome intent
 exports.welcome = (session) => {
     var msg = new builder.Message(session)
-        .text("Welcome to Maidai News " + session.userData.userName + ", I am your assistant.\n\nyou can ask me somthing like")
+        .text("Welcome to Maidai News " + session.userData.first_name + ", I am your assistant.\n\nyou can ask me somthing like")
         .suggestedActions(
             builder.SuggestedActions.create(
                 session, [

@@ -11,6 +11,13 @@ var inMemoryStorage = new builder.MemoryBotStorage();
 var bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage);
 var recognizer = new apiairecognizer(process.env.APIAI_TOKEN);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
+const facebook = require('botbuilder-facebookextension');
+
+bot.use(
+    facebook.RetrieveUserProfile({
+        accessToken: process.env.PAGE_ACCESS_TOKEN
+    })
+);
 
 const intentcontroller = require('./intentController');
 
