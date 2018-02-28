@@ -1,9 +1,24 @@
 const mongoose = require('mongoose');
 const FBprofile = mongoose.Schema({
+    user_fb_id: String,
+    userData: {
+        first_name: String,
+        last_name: String,
+        profile_pic: String,
+        locale: String,
+        gender: String
+    },
+    preferences: {
+        news: {
+            sources: [
+
+            ]
+        }
+    },
     createdOn: {
         type: Date,
         default: Date.now
     }
-}, { strict: false });
+});
 
 module.exports = mongoose.model("FBprofile", FBprofile);
