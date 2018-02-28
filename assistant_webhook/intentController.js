@@ -2,6 +2,7 @@ var builder = require('botbuilder');
 const FBprofile = require('./modelController/facebookProfile');
 //welcome intent
 exports.welcome = (session) => {
+    FBprofile.saveProfile(session.userData);
     var msg = new builder.Message(session)
         .text("Welcome to Maidai News " + session.userData.first_name + ", I am your assistant.\n\nyou can ask me somthing like")
         .suggestedActions(

@@ -1,7 +1,14 @@
 const FBprofile = require('../models/facebookProfile');
 
 exports.saveProfile = (profile) => {
-    const fbprofile = new FBprofile(profile);
+    const fbprofile = new FBprofile();
+    for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
+        var field = fields_1[_i];
+        if (profile[field] === undefined) {
+            continue;
+        }
+        fbprofile.userData[field] = profile[field];
+    }
     fbprofile.save()
         .then(result => {
             return result;
