@@ -8,6 +8,6 @@
         "JWT_KEY": {
             "description": "JWT secret",
             "value": "noOneWillKnow"
-        } 
+        }
     }
 }

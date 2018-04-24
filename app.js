@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 //connct to mongodb atlas
 mongoose.connect('mongodb://FahdLihidheb:' +
@@ -17,18 +18,7 @@ app.use(bodyParser.json());
 const assistantWebhook = require('./assistant_webhook/index');
 app.route('/maidai-assistant').post(assistantWebhook.connector)
 //-- Backend ( Maidai news )
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-        'Access-Control-Allow-Origin',
-        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    );
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Conttol-Allow-Methods', 'PUT, PATCH, POST, GET, DELETE');
-        return res.status(200).json({});
-    }
-    next();
-});
+app.use(cors());
 
 //-- backend routes/controllers
 const topicsRoutes = require('./backend_api/routes/topics');
