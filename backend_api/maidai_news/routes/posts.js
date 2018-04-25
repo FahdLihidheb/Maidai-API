@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
-const checkAuth = require('../middleware/check-auth');
+const checkAuth = require('../../middleware/check-auth');
 
 router.get('/profile/:userId', (req, res, next) => {
     Post.find({ writer: req.params.userId })
-        .select('_id title writer createdOn topics')
+        .select('_id title writer createdOn topics postBody')
         .populate('writer', '_id firstname lastname')
         .populate('topics', 'title')
         .exec()
@@ -19,7 +19,7 @@ router.get('/profile/:userId', (req, res, next) => {
 
 router.get('/topic/:topicId', (req, res, next) => {
     Post.find({ topics: req.params.topicId })
-        .select('_id title writer createdOn topics')
+        .select('_id title writer createdOn topics postBody')
         .populate('writer', '_id firstname lastname')
         .populate('topics', 'title')
         .exec()
@@ -35,7 +35,7 @@ router.get('/accueil', (req, res, next) => {
     Post.find()
     .limit(4)
     .sort('-createdOn')
-    .select('_id title writer createdOn topics')
+    .select('_id title writer createdOn topics postBody')
     .populate('writer', '_id firstname lastname')
     .populate('topics', 'title')
     .exec()

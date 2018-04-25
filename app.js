@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const checkAuth = require('./backend_api/middleware/check-auth');
 
 //connct to mongodb atlas
 mongoose.connect('mongodb://FahdLihidheb:' +
@@ -21,16 +22,26 @@ app.route('/maidai-assistant').post(assistantWebhook.connector)
 app.use(cors());
 
 //-- backend routes/controllers
-const topicsRoutes = require('./backend_api/routes/topics');
-const userController = require('./backend_api/controllers/user');
-const postsRoutes = require('./backend_api/routes/posts');
+const topicsRoutes = require('./backend_api/maidai_news/routes/topics');
+const userController = require('./backend_api/maidai_news/controllers/user');
+const postsRoutes = require('./backend_api/maidai_news/routes/posts');
+//-- 
+const MSAuthController = require('./backend_api/maidai_solution/controllers/authController');
 //Auth
 app.route('/maidai-news/signup').post(userController.signup);
 app.route('/maidai-news/login').post(userController.login);
+//check auth service JWT
+app.route('/maidai/checkAuth').post(checkAuth, (req, res, next) => {
+    res.status(201).json({
+        message: 'Auth successful'
+    });
+})
 // Backend routes callbacks
 app.use('/maidai-news/topics', topicsRoutes);
 app.use('/maidai-news/posts', postsRoutes);
-
+//backend for Maidaisolution
+app.route('/maidai-solution/register').post(MSAuthController.signup);
+app.route('/maidai-solution/login').post(MSAuthController.login);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
