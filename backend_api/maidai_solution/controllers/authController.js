@@ -24,6 +24,8 @@ exports.signup = (req, res, next) => {
                             profession: req.body.profession,
                             phonenumber: req.body.phonenumber,
                             address: req.body.address,
+                            gender: req.body.gender,
+                            imagePath: req.body.imagePath,
                             hash_password: hash,
                         });
                         doctor
@@ -39,7 +41,14 @@ exports.signup = (req, res, next) => {
                                     });
                                 return res.status(201).json({
                                     message: 'User created',
-                                    user: result,
+                                    user: {
+                                        email: result.email,
+                                        firstname: result.firstname,
+                                        lastname: result.lastname,
+                                        profession: result.profession,
+                                        phonenumber: result.phonenumber,
+                                        address: result.address,
+                                    },
                                     token: token
                                 });
                             })
@@ -81,7 +90,17 @@ exports.login = (req, res, next) => {
                         });
                     return res.status(201).json({
                         message: 'Auth Successful',
-                        user: doctor,
+                        user: {
+                            email: doctor[0].email,
+                            firstname: doctor[0].firstname,
+                            lastname: doctor[0].lastname,
+                            profession: doctor[0].profession,
+                            phonenumber: doctor[0].phonenumber,
+                            address: doctor[0].address,
+                            gender: doctor[0].gender,
+                            imagePath: doctor[0].imagePath,
+                            privacySettings: doctor[0].privacySettings
+                        },
                         token: token
                     });
                 }
@@ -97,10 +116,3 @@ exports.login = (req, res, next) => {
         });
 };
 
-exports.updateAccount = (req, res, next) => {
-
-};
-
-exports.deleteAccount = (req, res, next) => {
-
-};

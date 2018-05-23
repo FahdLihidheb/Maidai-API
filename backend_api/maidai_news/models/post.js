@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const postSchema = mongoose.Schema({
-    title:{
+    title: {
         type: String,
         required: true,
         unique: true,
         trim: true
     },
-    topics:[
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Topics' 
-            }
+    topics: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Topics'
+        }
     ],
-    writer:{
+    writer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
         required: true
@@ -24,7 +24,7 @@ const postSchema = mongoose.Schema({
     createdOn: {
         type: Date,
         default: Date.now
-      }
+    }
 });
 
 module.exports = mongoose.model("Posts", postSchema);

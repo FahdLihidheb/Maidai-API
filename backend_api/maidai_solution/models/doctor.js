@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const docotrSchema = mongoose.Schema({
-    email:{
+    email: {
         type: String,
+        trim: true,
         required: true,
-        unique: true,
-        trim: true
     },
     firstname: {
         type: String,
@@ -22,11 +21,32 @@ const docotrSchema = mongoose.Schema({
     },
     phonenumber: {
         type: String,
-        required: true,
+        required: true
     },
     address: {
+        type: {
+            name: String,
+            lat: Number,
+            lng: Number,
+        },
+        required: true
+    },
+    gender: {
         type: String,
-        required: true,
+        enum: ['Male', 'Female']
+    },
+    imagePath: {
+        type: String,
+    },
+    privacySettings: {
+        type:{
+            isEmail: Boolean,
+            isPhonenumber: Boolean
+        },
+        default: {
+            isEmail: true,
+            isPhonenumber: true
+        }
     },
     hash_password: {
         type: String,
@@ -35,7 +55,7 @@ const docotrSchema = mongoose.Schema({
     createdOn: {
         type: Date,
         default: Date.now
-      }
+    }
 });
 
 module.exports = mongoose.model("Doctors", docotrSchema);

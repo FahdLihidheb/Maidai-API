@@ -6,12 +6,13 @@ exports.welcome = (session) => {
     profile.user_fb_id = session.message.address.user.id;
     FBprofile.saveProfile(profile);
     var msg = new builder.Message(session)
-        .text("Welcome to Maidai News " + session.userData.first_name + ", I am your assistant.\n\nyou can ask me somthing like")
+        .text("Welcome to Maidai " + session.userData.first_name + ", I am your assistant.\n\nMaidai is a platform dedicated for doctors to schedual appoinmnet with patients and analysing cells with the help of the AI.\n\nAs Maidai assistant, i am here to help your reach our doctors, make appoinment and provide you with the latest health news and informations.")
         .suggestedActions(
             builder.SuggestedActions.create(
                 session, [
                     builder.CardAction.imBack(session, "Medical news", "Medical news"),
-                    builder.CardAction.imBack(session, "News about fever", "News bout fever")
+                    builder.CardAction.imBack(session, "Drug informations", "Drug informations"),
+                    builder.CardAction.imBack(session, "Getting started", "Make an appoinment")
                 ]
             ));
     session.send(msg);
