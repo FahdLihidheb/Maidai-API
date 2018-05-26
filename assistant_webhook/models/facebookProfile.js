@@ -11,7 +11,9 @@ const FBprofile = mongoose.Schema({
     preferences: {
         news: {
             sources: [
-
+                {
+                    type: String
+                }
             ]
         }
     },

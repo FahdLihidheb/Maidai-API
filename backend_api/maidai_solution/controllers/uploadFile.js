@@ -27,30 +27,41 @@ exports.uploadToLocal = (req, res) => {
 
     upload(req, res, function (err) {
         if (err) {
-            res.status(500).json({ message: err });
+            res.status(500).json({
+                message: err
+            });
             return;
         }
         cloudinary.uploader.upload(
             './uploads/' + req.file.filename,
             function (result) {
                 if (result.error) {
-                    res.status(500).json({ message: result.error });
+                    res.status(500).json({
+                        message: result.error
+                    });
                     return;
                 }
                 console.log(result);
-                doctorController.updateImage(req.userData.userId, result.version + '/Doctors_images/' + req.file.filename, res);
-            },
-            {
+                doctorController.updateImage(req.userData.userId, 'v' + result.version + '/Doctors_images/' + req.file.filename, res);
+            }, {
                 public_id: 'Doctors_images/' + req.userData.userId,
                 crop: 'limit',
                 width: 255,
                 height: 255,
-                eager: [
-                    {
-                        width: 255, height: 255, crop: 'thumb', gravity: 'face',
-                        radius: 20, effect: 'sepia'
+                eager: [{
+                        width: 255,
+                        height: 255,
+                        crop: 'thumb',
+                        gravity: 'face',
+                        radius: 20,
+                        effect: 'sepia'
                     },
-                    { width: 255, height: 255, crop: 'fit', format: 'png' }
+                    {
+                        width: 255,
+                        height: 255,
+                        crop: 'fit',
+                        format: 'png'
+                    }
                 ]
             }
         );

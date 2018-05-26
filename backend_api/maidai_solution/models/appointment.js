@@ -4,18 +4,22 @@ const appointmentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PatientFiles'
     },
+    fbProfile: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FbProfiles'
+    },
+    status:{
+        type: Boolean,
+        default: true
+    },
     cause: {
         type: String,
         required: true,
     },
-    notes: {
+    note: {
         type: String,
         required: true,
     },
-    analyzeFile: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'AnalyzeFiles'
-    }],
     dueDate: {
         type: Date,
         required: true

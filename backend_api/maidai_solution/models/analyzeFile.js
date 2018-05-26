@@ -1,12 +1,20 @@
 const mongoose = require('mongoose');
 const analyzeFileSchema = mongoose.Schema({
-    appointment: {
+    codename: {
+        type: String,
+        required: true
+    },
+    patientFile: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Appointment'
+        ref: 'PatientFiles'
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Doctors'
+    },
+    sampleCellImage: {
+        type: String,
+        required: true
     },
     diagnosis: {
         type: {
@@ -17,11 +25,10 @@ const analyzeFileSchema = mongoose.Schema({
                 }
             }],
             evaluationTime: Float32Array,
-            cellSample: String
         },
         required: true,
     },
-    notes: {
+    note: {
         type: String,
         required: true,
     },

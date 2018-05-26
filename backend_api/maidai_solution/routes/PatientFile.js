@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const patientController = require('../controllers/patientController');
+const patientFileController = require('../controllers/patientFileController');
 const checkAuth = require('../../middleware/check-auth');
 
-router.get('/', patientController.getPatients);
-router.get('/:patientId', patientController.getPatientById);
-router.post('/', checkAuth, patientController.addPatient);
+router.get('/byDoctor',checkAuth, patientFileController.getPatientFilesByDoctor);
+router.get('/:patientFileId', patientFileController.getPatientFileById);
+router.post('/', checkAuth, patientFileController.addPatientFile);
 
 module.exports = router;
