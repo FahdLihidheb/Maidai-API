@@ -48,6 +48,11 @@ app.use('/maidai-news/posts', postsRoutes);
 
 const UploadFile = require('./backend_api/maidai_solution/controllers/uploadFile');
 
+const UploadFileToAWS = require('./backend_api/maidai_solution/controllers/UploadFileToAWS');
+
+
+app.route('/api/uploadToAWS').post( UploadFileToAWS.uploadToAWS);
+
 app.route('/api/upload').post(checkAuth, UploadFile.uploadToLocal);
 app.route('/maidai-solution/register').post(MSAuthController.signup);
 app.route('/maidai-solution/login').post(MSAuthController.login);
