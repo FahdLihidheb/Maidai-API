@@ -32,6 +32,7 @@ const postsRoutes = require('./backend_api/maidai_news/routes/posts');
 const MSAuthController = require('./backend_api/maidai_solution/controllers/authController');
 const doctorRoutes = require('./backend_api/maidai_solution/routes/doctors');
 const patientFileRoutes = require('./backend_api/maidai_solution/routes/PatientFile');
+const appointmentRoutes = require('./backend_api/maidai_solution/routes/appointment');
 //Auth
 app.route('/maidai-news/signup').post(userController.signup);
 app.route('/maidai-news/login').post(userController.login);
@@ -53,6 +54,7 @@ app.route('/maidai-solution/register').post(MSAuthController.signup);
 app.route('/maidai-solution/login').post(MSAuthController.login);
 app.use('/maidai-solution/doctors', doctorRoutes);
 app.use('/maidai-solution/patientFiles', patientFileRoutes);
+app.use('/maidai-solution/appointments', appointmentRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');

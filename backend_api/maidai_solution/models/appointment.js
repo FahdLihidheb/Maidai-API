@@ -4,15 +4,16 @@ const appointmentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PatientFiles'
     },
-    fbProfile: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'FbProfiles'
+        ref: 'Doctors'
     },
-    status:{
-        type: Boolean,
+    visitType:{
+        type: String,
+        enum: ['New', 'Controle'],
         default: true
     },
-    cause: {
+    problem: {
         type: String,
         required: true,
     },
@@ -21,7 +22,12 @@ const appointmentSchema = mongoose.Schema({
         required: true,
     },
     dueDate: {
-        type: Date,
+        type: {
+            day: String,
+            month: String,
+            year: String,
+            time: String
+        },
         required: true
     },
     createdOn: {
