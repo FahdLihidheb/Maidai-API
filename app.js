@@ -32,7 +32,10 @@ const postsRoutes = require('./backend_api/maidai_news/routes/posts');
 const MSAuthController = require('./backend_api/maidai_solution/controllers/authController');
 const doctorRoutes = require('./backend_api/maidai_solution/routes/doctors');
 const patientFileRoutes = require('./backend_api/maidai_solution/routes/PatientFile');
+
 const appointmentRoutes = require('./backend_api/maidai_solution/routes/appointment');
+const analyseFileRoutes = require('./backend_api/maidai_solution/routes/AnalyseFile');
+
 //Auth
 app.route('/maidai-news/signup').post(userController.signup);
 app.route('/maidai-news/login').post(userController.login);
@@ -49,12 +52,18 @@ app.use('/maidai-news/posts', postsRoutes);
 
 const UploadFile = require('./backend_api/maidai_solution/controllers/uploadFile');
 
+const UploadFileToAWS = require('./backend_api/maidai_solution/controllers/UploadFileToAWS');
+
+
+app.route('/api/uploadToAWS').post(UploadFileToAWS.uploadToAWS);
+
 app.route('/api/upload').post(checkAuth, UploadFile.uploadToLocal);
 app.route('/maidai-solution/register').post(MSAuthController.signup);
 app.route('/maidai-solution/login').post(MSAuthController.login);
 app.use('/maidai-solution/doctors', doctorRoutes);
 app.use('/maidai-solution/patientFiles', patientFileRoutes);
 app.use('/maidai-solution/appointments', appointmentRoutes);
+app.use('/maidai-solution/analyseFiles', analyseFileRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
