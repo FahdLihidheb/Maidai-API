@@ -18,7 +18,7 @@ const analyzeFileSchema = mongoose.Schema({
     },
     diagnosis: {
         type: {
-            canserTypes: [{
+            cancerTypes: [{
                 type: {
                     label: String,
                     precision: Float32Array

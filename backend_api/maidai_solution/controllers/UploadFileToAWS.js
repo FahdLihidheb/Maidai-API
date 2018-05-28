@@ -54,7 +54,7 @@ exports.uploadToAWS = (req,res) =>{
                // doctorController.updateImage(req.userData.userId, 'v' + result.version + '/Doctors_images/' + req.file.filename, res);
           analyseFileController.PredictImage(result.url,req.file.filename,res);
             }, {
-                public_id: 'Analyse_images/test',
+                public_id: 'Analyse_images/'+req.file.filename,
                 crop: 'limit',
                 width: 255,
                 height: 255,
